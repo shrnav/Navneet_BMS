@@ -1,8 +1,10 @@
 package com.navneet.learning.bms.bmsapi;
 
+import com.navneet.learning.bms.bmsapi.entity.Movie;
 import com.navneet.learning.bms.bmsapi.entity.Screen;
 import com.navneet.learning.bms.bmsapi.entity.Screening;
 import com.navneet.learning.bms.bmsapi.entity.Theatre;
+import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreenRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
 import com.navneet.learning.bms.bmsapi.service.TheatreRepository;
@@ -31,6 +33,9 @@ public class ScreeningCRUDService {
 
     @Autowired
     ScreenRepository screenRepository;
+
+    @Autowired
+    MovieRepository movieRepository;
 
     @RequestMapping(value = "/delete/{screeningDate}", method = RequestMethod.GET)
     public String deleteShowForTheDay(@PathVariable Date screeningDate) {
@@ -79,5 +84,24 @@ public class ScreeningCRUDService {
         return "show has been :: " + screeningDate;
     }
 
+    @RequestMapping(value = "/getAllScreening", method = RequestMethod.GET)
+    public Iterable<Screening> getAllScreening() {
+
+        Iterable<Screening> all = screeningRepository.findAll();
+        all.forEach(System.out::println);
+        return all;
+
+    }
+
+    @RequestMapping(value = "/getAllMovies", method = RequestMethod.GET)
+    public Iterable<Movie> getAllMovies() {
+
+        return movieRepository.findAll();
+    }
+    @RequestMapping(value = "/getAllScreen", method = RequestMethod.GET)
+    public Iterable<Screen> getAllScreen() {
+
+        return screenRepository.findAll();
+    }
 
 }

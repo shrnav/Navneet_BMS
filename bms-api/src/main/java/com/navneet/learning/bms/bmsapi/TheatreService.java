@@ -1,7 +1,9 @@
 package com.navneet.learning.bms.bmsapi;
 
+import com.navneet.learning.bms.bmsapi.entity.Movie;
 import com.navneet.learning.bms.bmsapi.entity.Screening;
 import com.navneet.learning.bms.bmsapi.entity.Theatre;
+import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
 import com.navneet.learning.bms.bmsapi.service.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +28,14 @@ public class TheatreService {
     TheatreRepository theatreRepository;
     @Autowired
     ScreeningRepository screeningRepository;
-
+    @Autowired
+    MovieRepository movieRepository;
     @RequestMapping(value = "/bms/{theatreName}/{city}", method = RequestMethod.GET)
     public String getTheatreByCityAndMovie(@PathVariable String theatreName, @PathVariable String city) {
 
         //List<Theatre> listOfTheatre = new ArrayList<>();
         Theatre byTheatreNameAndTheatreCity = theatreRepository.findByTheatreNameAndTheatreCity(theatreName, city);
-        System.out.println("environment.getProperty(\"local.server.port\")===>" + environment.getProperty("local.server.port"));
+
         return "Theatre ID: " + byTheatreNameAndTheatreCity.getTheatreId() + " PORT: " + environment.getProperty("local.server.port");
     }
 
@@ -41,7 +44,7 @@ public class TheatreService {
 
         List<Screening> listOfScreening = new ArrayList<>();
         Theatre byTheatreNameAndTheatreCity = theatreRepository.findByTheatreNameAndTheatreCity(theatreName, city);
-        System.out.println("hi navneet>>>====" + theatreName + "====" + screeningTime + "==========" + byTheatreNameAndTheatreCity.getTheatreId());
+
 
         Screening byMovieNameAndTheatreIdAndScreeningDateAndScreeningTime = screeningRepository.findByMovieNameAndTheatreIdAndScreeningDateAndScreeningTime(movieName, byTheatreNameAndTheatreCity.getTheatreId(), Date.valueOf(screeninDate), Time.valueOf(screeningTime));
 
@@ -52,9 +55,11 @@ public class TheatreService {
     @RequestMapping(value = "/insert/{theatreCity}/{theatreName}", method = RequestMethod.GET)
     public String insertIntoTheatre(@PathVariable String theatreCity, @PathVariable String theatreName) {
         Theatre theatre = new Theatre(theatreCity, theatreName);
-        System.out.println("Navneet===>>>>" + theatre.getTheatreCity());
+
         theatreRepository.save(theatre);
-        System.out.println("===>>>>" + theatre.getTheatreId());
+
         return "Row inserted successfully with id " + theatre.getTheatreId();
     }
+
+
 }
