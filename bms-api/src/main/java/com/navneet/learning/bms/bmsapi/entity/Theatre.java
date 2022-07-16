@@ -1,7 +1,16 @@
 package com.navneet.learning.bms.bmsapi.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 
+@Setter
+@Getter
+@Slf4j
+@NoArgsConstructor
 @Entity
 @Table(name = "THEATRE")
 public class Theatre {
@@ -14,36 +23,8 @@ public class Theatre {
     @Column(name = "THEATRE_CITY")
     private String theatreCity;
 
-    public Theatre() {
-    }
-
     public Theatre(String theatreName, String theatreCity) {
         this.theatreName = theatreName;
         this.theatreCity = theatreCity;
     }
-
-    public long getTheatreId() {
-        return theatreId;
-    }
-
-    public void setTheatreId(long theatreId) {
-        this.theatreId = theatreId;
-    }
-
-    public String getTheatreName() {
-        return theatreName;
-    }
-
-    public void setTheatreName(String theatreName) {
-        this.theatreName = theatreName;
-    }
-
-    public String getTheatreCity() {
-        return theatreCity;
-    }
-
-    public void setTheatreCity(String theatreCity) {
-        this.theatreCity = theatreCity;
-    }
-
 }

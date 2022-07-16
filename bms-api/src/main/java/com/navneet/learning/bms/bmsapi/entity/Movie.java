@@ -1,10 +1,18 @@
 package com.navneet.learning.bms.bmsapi.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+@Setter
+@Getter
+@Slf4j
+@NoArgsConstructor
 @Entity
 @Table(name = "MOVIE")
 public class Movie {
@@ -13,40 +21,6 @@ public class Movie {
     private String movieName;
     @Column(name = "MOVIE_ID")
     private long movieId;
-    //    @Column(name = "MOVIE_POSTER_URL")
-//    private String moviePosterUrl;
     @Column(name = "MOVIE_TAGS")
     private String movieTags;
-
-    public String getMovieTags() {
-        return movieTags;
-    }
-
-    public void setMovieTags(String movieTags) {
-        this.movieTags = movieTags;
-    }
-
-    public String getMovieName() {
-        return movieName;
-    }
-
-    public void setMovieName(String movieName) {
-        this.movieName = movieName;
-    }
-
-    public long getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(long movieId) {
-        this.movieId = movieId;
-    }
-
-//    public String getMoviePosterUrl() {
-//        return moviePosterUrl;
-//    }
-//
-//    public void setMoviePosterUrl(String moviePosterUrl) {
-//        this.moviePosterUrl = moviePosterUrl;
-//    }
 }

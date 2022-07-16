@@ -8,6 +8,7 @@ import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreenRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
 import com.navneet.learning.bms.bmsapi.service.TheatreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @RestController
 public class ScreeningCRUDService {
-    Logger logger = LoggerFactory.getLogger(ScreeningCRUDService.class);
+
     @Autowired
     ScreeningRepository screeningRepository;
 
@@ -43,7 +44,7 @@ public class ScreeningCRUDService {
         List<Screening> byScreeningDate = screeningRepository.findByScreeningDate(screeningDate);
         System.out.println("===" + byScreeningDate.get(0));
         screeningRepository.deleteAll(byScreeningDate);
-        logger.info("All shows are deleted for the day:: " + screeningDate);
+        log.info("All shows are deleted for the day:: " + screeningDate);
         return "All shows are deleted for the day:: " + screeningDate;
     }
 
@@ -66,7 +67,7 @@ public class ScreeningCRUDService {
             screening.setScreenId(screen.getScreenId());
             screeningRepository.save(screening);
         }
-        logger.info("show is inserted for the day:: " + screeningDate);
+        log.info("show is inserted for the day:: " + screeningDate);
         return "show is inserted for the day:: " + screeningDate;
     }
 
@@ -80,7 +81,7 @@ public class ScreeningCRUDService {
         }
 
 
-        logger.info("show is inserted for the day:: " + screeningDate);
+        log.info("show is inserted for the day:: " + screeningDate);
         return "show has been :: " + screeningDate;
     }
 

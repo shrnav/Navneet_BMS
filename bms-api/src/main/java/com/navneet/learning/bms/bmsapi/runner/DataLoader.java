@@ -8,6 +8,7 @@ import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreenRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
 import com.navneet.learning.bms.bmsapi.service.TheatreRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 //import org.springframework.core.task.TaskExecutor;
-
+@Slf4j
 @Component
 public class DataLoader implements ApplicationRunner {
-    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -39,11 +40,6 @@ public class DataLoader implements ApplicationRunner {
     private ScreeningRepository screeningRepository;
     @Autowired
     private TheatreRepository theatreRepository;
-
-
-    // @Autowired
-    //private TaskExecutor taskExecutor;
-
 
     @Autowired
     public DataLoader(MovieRepository movieRepository, ScreeningRepository screeningRepository,
@@ -74,8 +70,8 @@ public class DataLoader implements ApplicationRunner {
             brLinks.readLine();     // Skip header line
             while ((movieLine = brMovies.readLine()) != null) {
                 linkLine = brLinks.readLine();
-                //taskExecutor.execute(new ProcessMovie(movieLine, linkLine));
-                System.out.println("new ProcessMovie(movieLine, linkLine)===" + new ProcessMovie(movieLine, linkLine));
+
+            log.info("new ProcessMovie(movieLine, linkLine)===" + new ProcessMovie(movieLine, linkLine));
                 new ProcessMovie(movieLine, linkLine).run();
             }
         } catch (FileNotFoundException e) {
@@ -86,14 +82,9 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void populateScreeningsTable() throws CloneNotSupportedException {
-        /* schema.sql lists 5 theaters, generate 2 screenings randomly for
-         * each screen in each theater
-         */
-        System.out.println("debug..............123");
-        for (int i = 2; i <= 6; i++) {
-            System.out.println("=========" + screenRepository.findByTheatreId(i));
+           for (int i = 2; i <= 6; i++) {
             List<Screen> screens = screenRepository.findByTheatreId(i);
-            System.out.println("debug..............124   " + screens.size());
+
             for (int j = 1; j < screens.size(); j++) {
                 Screening screening1 = new Screening();
                 Screening screening2 = new Screening();
@@ -206,7 +197,7 @@ public class DataLoader implements ApplicationRunner {
 
         @Override
         public void run() {
-            LOGGER.info(Thread.currentThread().getId() + ":" + linkLine);
+            log.info(Thread.currentThread().getId() + ":" + linkLine);
             String[] movieInfo = movieLine.split(",");
 
             String movieName = "";

@@ -1,7 +1,16 @@
 package com.navneet.learning.bms.bmsapi.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 
+@Setter
+@Getter
+@Slf4j
+@NoArgsConstructor
 @Entity
 public class Ticket {
     @Id
@@ -12,28 +21,4 @@ public class Ticket {
     private long screeningId;
     @Column(name = "SEAT_NUM")
     private int seatNum;
-
-    public long getTicketId() {
-        return ticketId;
-    }
-
-    public void setTicketId(long ticketId) {
-        this.ticketId = ticketId;
-    }
-
-    public long getScreeningId() {
-        return screeningId;
-    }
-
-    public void setScreeningId(long screeningId) {
-        this.screeningId = screeningId;
-    }
-
-    public int getSeatNum() {
-        return seatNum;
-    }
-
-    public void setSeatNum(int seatNum) {
-        this.seatNum = seatNum;
-    }
 }

@@ -1,38 +1,24 @@
 package com.navneet.learning.bms.bmsapi.entity;
 
+import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import javax.persistence.*;
 
+@Setter
+@Getter
+@Slf4j
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "ADDRESS")
 public class Address {
-
     @Id
     @Column(name = "ADDRESS_ID")
     @GeneratedValue
     private long addressId;
     @Column(name = "FULL_ADD")
+    @NonNull
     private String fullAdd;
 
-    public Address() {
     }
 
-    public Address(String fullAdd) {
-        this.fullAdd = fullAdd;
-    }
-
-    public long getAddressId() {
-        return addressId;
-    }
-
-    public void setAddressId(long addressId) {
-        this.addressId = addressId;
-    }
-
-    public String getFullAdd() {
-        return fullAdd;
-    }
-
-    public void setFullAdd(String fullAdd) {
-        this.fullAdd = fullAdd;
-    }
-}

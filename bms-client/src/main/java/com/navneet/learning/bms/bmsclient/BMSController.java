@@ -13,12 +13,12 @@ public class BMSController {
 
     @GetMapping("/bms-client/{theatreName}/{city}/{movieName}/{screeninDate}/{screeningTime}")
     public String getResponse(@PathVariable String theatreName, @PathVariable String city, @PathVariable String movieName, @PathVariable String screeninDate, @PathVariable String screeningTime) {
-        System.out.println("debu........................1");
+
         return proxy.getBMS(theatreName,city,movieName,screeninDate,screeningTime);
     }
     @GetMapping("/bms-client/{theatreName}/{city}")
     public String getResponseForTheatreByCityAndMovie(@PathVariable String theatreName, @PathVariable String city) {
-        System.out.println("debu1........................1");
+
         return proxy.getBMS(theatreName,city);
     }
 }
