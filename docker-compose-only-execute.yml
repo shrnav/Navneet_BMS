@@ -1,0 +1,37 @@
+version: '2'
+services:
+    bms-namingserver:
+        container_name: bms-namingserver
+        
+        image: navneet204/bms-namingserver:latest
+        ports:
+            - 8761:8761
+        networks:
+            - spring-cloud-network
+    bms-gateway:
+        container_name: bms-gateway
+       
+        image: navneet204/bms-gateway:latest
+        ports:
+            - 8766:8766
+        networks:
+            - spring-cloud-network
+    bms-api:
+        container_name: bms-api
+        
+        image: navneet204/bms-api:latest
+        ports:
+            - 8080:8080
+        networks:
+            - spring-cloud-network
+    bms-client:
+        container_name: bms-client
+        
+        image: navneet204/bms-client:latest
+        ports:
+            - 8888:8888
+        networks:
+            - spring-cloud-network
+networks:
+    spring-cloud-network:
+        driver: bridge

@@ -104,4 +104,10 @@ public class ScreeningCRUDService {
         return screenRepository.findAll();
     }
 
+    @RequestMapping(value = "/getAllTheatre", method = RequestMethod.GET)
+    public Iterable<Theatre> getAllTheatre() {
+
+        return theatreRepository.findAll();
+    }
+
 }
