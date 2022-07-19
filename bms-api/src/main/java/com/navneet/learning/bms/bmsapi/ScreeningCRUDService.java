@@ -4,6 +4,7 @@ import com.navneet.learning.bms.bmsapi.entity.Movie;
 import com.navneet.learning.bms.bmsapi.entity.Screen;
 import com.navneet.learning.bms.bmsapi.entity.Screening;
 import com.navneet.learning.bms.bmsapi.entity.Theatre;
+import com.navneet.learning.bms.bmsapi.exception.TheatreNotFoundException;
 import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreenRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
@@ -42,7 +43,7 @@ public class ScreeningCRUDService {
     public String deleteShowForTheDay(@PathVariable Date screeningDate) {
 
         List<Screening> byScreeningDate = screeningRepository.findByScreeningDate(screeningDate);
-        System.out.println("===" + byScreeningDate.get(0));
+
         screeningRepository.deleteAll(byScreeningDate);
         log.info("All shows are deleted for the day:: " + screeningDate);
         return "All shows are deleted for the day:: " + screeningDate;
@@ -54,8 +55,12 @@ public class ScreeningCRUDService {
         List<Screen> listOfScreens = null;
         List<Theatre> listOfTheatre = new ArrayList<>();
         Theatre byTheatreNameAndTheatreCity = theatreRepository.findByTheatreNameAndTheatreCity(theatreName, city);
-        if (0L != byTheatreNameAndTheatreCity.getTheatreId()) {
+        if (null != byTheatreNameAndTheatreCity && 0L != byTheatreNameAndTheatreCity.getTheatreId()) {
             listOfScreens = screenRepository.findByTheatreId(byTheatreNameAndTheatreCity.getTheatreId());
+        }
+        else
+        {
+            throw new TheatreNotFoundException();
         }
         for (Screen screen : listOfScreens) {
             Screening screening = new Screening();

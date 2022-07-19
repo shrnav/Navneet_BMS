@@ -3,6 +3,8 @@ package com.navneet.learning.bms.bmsapi;
 import com.navneet.learning.bms.bmsapi.entity.Movie;
 import com.navneet.learning.bms.bmsapi.entity.Screening;
 import com.navneet.learning.bms.bmsapi.entity.Theatre;
+import com.navneet.learning.bms.bmsapi.exception.ElementAlreadyExistException;
+import com.navneet.learning.bms.bmsapi.exception.NoSuchElementExistsException;
 import com.navneet.learning.bms.bmsapi.service.MovieRepository;
 import com.navneet.learning.bms.bmsapi.service.ScreeningRepository;
 import com.navneet.learning.bms.bmsapi.service.TheatreRepository;
@@ -55,7 +57,11 @@ public class TheatreService {
     @RequestMapping(value = "/insert/{theatreCity}/{theatreName}", method = RequestMethod.GET)
     public String insertIntoTheatre(@PathVariable String theatreCity, @PathVariable String theatreName) {
         Theatre theatre = new Theatre(theatreCity, theatreName);
+        Theatre byTheatreNameAndTheatreCity = theatreRepository.findByTheatreNameAndTheatreCity(theatreName, theatreCity);
 
+        if(null!=byTheatreNameAndTheatreCity){
+            throw new ElementAlreadyExistException("Theatre " +theatreName+" already exist in the city "+theatreCity);
+        }
         theatreRepository.save(theatre);
 
         return "Row inserted successfully with id " + theatre.getTheatreId();
